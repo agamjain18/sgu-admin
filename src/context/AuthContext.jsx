@@ -2,6 +2,10 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8000'
+  : 'https://api.agamjain.online/sgu';
+
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('admin_token'));
@@ -10,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (token) {
             // Verify token or fetch user info
-            fetch('http://127.0.0.1:8000/users/me/', {
+            fetch(`${API_BASE_URL}/users/me/`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
