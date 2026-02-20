@@ -31,7 +31,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "dist/*"
+          source: "dist/**"
           target: "/home/${{ secrets.SERVER_USER }}/sgu_admin_tmp"
           strip_components: 1
           rm: true
