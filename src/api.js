@@ -15,11 +15,7 @@ export const api = {
     getProducts: async () => {
         const response = await fetch(`${API_BASE_URL}/products/`);
         if (!response.ok) {
-            if (response.status === 401) {
-                localStorage.removeItem('admin_token');
-                window.location.href = '/login';
-            }
-            throw new Error('Failed to fetch products');
+            throw new Error('Unauthorized');
         }
         return response.ok ? response.json() : [];
     },
@@ -82,11 +78,7 @@ export const api = {
             headers: getHeaders()
         });
         if (!response.ok) {
-            if (response.status === 401) {
-                localStorage.removeItem('admin_token');
-                window.location.href = '/login';
-            }
-            throw new Error('Failed to fetch inquiries');
+            throw new Error('Unauthorized');
         }
         return response.json();
     },
