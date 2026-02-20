@@ -108,7 +108,7 @@ export default function ProductList() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {products
-                  .filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()) || p.category.toLowerCase().includes(searchTerm.toLowerCase()) || p.sku_name.toLowerCase().includes(searchTerm.toLowerCase()))
+                  .filter(p => (p.name || '').toLowerCase().includes(searchTerm.toLowerCase()) || (p.category || '').toLowerCase().includes(searchTerm.toLowerCase()) || (p.sku_name || '').toLowerCase().includes(searchTerm.toLowerCase()))
                   .map((product) => (
                   <tr key={product.id} className="hover:bg-slate-50/50 transition-colors group">
                     <td className="px-8 py-5">

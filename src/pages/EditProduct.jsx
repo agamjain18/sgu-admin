@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Save, X, Image as ImageIcon, Upload, Info, Loader2, ClipboardList, Settings, CheckCircle2, Star, Plus, Trash2, GripVertical, ChevronRight } from 'lucide-react';
+import { Save, X, Image as ImageIcon, Upload, Info, Loader2, ClipboardList, Settings, CheckCircle2, Star, Plus, Trash2, GripVertical, ChevronRight, ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { api } from '../api';
@@ -100,7 +100,7 @@ export default function EditProduct() {
           applications: product.applications || '',
           packaging: product.packaging || '',
           certifications: product.certifications || '',
-          category: product.category,
+          category: product.category || '',
           image: product.image || '',
           is_bestseller: product.is_bestseller || false,
         });
