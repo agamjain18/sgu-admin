@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  --bg-main: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: rgba(0, 0, 0, 0.08);
+  --primary: #1b9302;
+  --primary-hover: #167a02;
+  --primary-light: #22b503;
+}
+
+@theme {
+  --color-primary: #1b9302;
+  --color-primary-hover: #167a02;
+  --color-primary-light: #22b503;
+  --color-bg-secondary: #ffffff;
+  --color-border: rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+@utility btn-primary {
+  @apply bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg transition-all duration-200 transform hover:-translate-y-0.5 shadow-lg active:scale-95;
+}
+
+@utility input-field {
+  @apply w-full bg-white border border-border rounded-lg px-4 py-2 text-slate-900 focus:outline-none focus:border-primary transition-colors;
+}
