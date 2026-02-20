@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Lock, User, ShieldCheck, Loader2, ArrowRight } from 'lucide-react';
 import { showToast } from '../components/Toast';
 
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8000'
+  : 'https://api.agamjain.online/sgu';
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +24,7 @@ export default function Login() {
       formData.append('username', username);
       formData.append('password', password);
 
-      const response = await fetch('http://127.0.0.1:8000/login', {
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -34,7 +38,7 @@ export default function Login() {
 
       const data = await response.json();
       
-      const userRes = await fetch('http://127.0.0.1:8000/users/me/', {
+      const userRes = await fetch(`${API_BASE_URL}/users/me/`, {
         headers: { 'Authorization': `Bearer ${data.access_token}` }
       });
       const userData = await userRes.json();
