@@ -25,13 +25,43 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Deploy to Server
+      - name: Deploy to Server via SCP (to temp folder)
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "dist/*"
-          target: "/var/www/agamjain.online/sgu/admin"
+          target: "/home/${{ secrets.SERVER_USER }}/sgu_admin_tmp"
           strip_components: 1
           rm: true
+
+      - name: Move files and Fix Permissions via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            TARGET_DIR="/var/www/agamjain.online/sgu/admin"
+            TEMP_DIR="/home/${{ secrets.SERVER_USER }}/sgu_admin_tmp"
+
+            # 1. Ensure target directory exists
+            sudo mkdir -p $TARGET_DIR
+
+            # 2. Clear target directory
+            echo "🗑️ Clearing $TARGET_DIR..."
+            sudo rm -rf $TARGET_DIR/*
+
+            # 3. Move files to target
+            echo "🚀 Placing new Admin files..."
+            sudo cp -r $TEMP_DIR/. $TARGET_DIR/
+            rm -rf $TEMP_DIR
+
+            # 4. Fix Permissions
+            echo "🔐 Setting permissions..."
+            sudo chown -R root:root $TARGET_DIR
+            sudo find $TARGET_DIR -type d -exec chmod 755 {} +
+            sudo find $TARGET_DIR -type f -exec chmod 644 {} +
+
+            echo "✅ SGU Admin Deployment Complete!"
