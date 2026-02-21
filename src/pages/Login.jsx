@@ -5,7 +5,7 @@ import { Lock, User, ShieldCheck, Loader2, ArrowRight } from 'lucide-react';
 import { showToast } from '../components/Toast';
 
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://127.0.0.1:8000'
+  ? 'http://127.0.0.1:8022'
   : 'https://api.agamjain.online/sgu';
 
 export default function Login() {

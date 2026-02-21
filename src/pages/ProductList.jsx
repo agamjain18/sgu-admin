@@ -113,8 +113,11 @@ export default function ProductList() {
                   <tr key={product.id} className="hover:bg-slate-50/50 transition-colors group">
                     <td className="px-8 py-5">
                       <Link to={`/product-details/${product.id}`} className="flex items-center gap-4 group/item">
-                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200 group-hover/item:border-primary/50 transition-colors">
+                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200 group-hover/item:border-primary/50 transition-colors relative">
                           <img src={product.image ? product.image.split(',')[0] : ''} alt={product.name} className="w-full h-full object-cover group-hover/item:scale-110 transition-transform" />
+                          <div className="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full p-0.5 shadow-sm opacity-80">
+                             <img src="/logo.png" alt="" className="w-full h-full object-contain mix-blend-multiply" />
+                          </div>
                         </div>
                         <div>
                           <div className="flex items-center gap-2">

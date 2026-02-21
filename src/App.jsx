@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -9,7 +9,8 @@ import {
   LogOut,
   Menu,
   X,
-  ShieldCheck
+  ShieldCheck,
+  Briefcase
 } from 'lucide-react';
 import Dashboard from './pages/Dashboard';
 import ProductList from './pages/ProductList';
@@ -18,14 +19,30 @@ import EditProduct from './pages/EditProduct';
 import ProductDetails from './pages/ProductDetails';
 import Settings from './pages/Settings';
 import WebInquiries from './pages/WebInquiries';
+import JobApplications from './pages/JobApplications';
 import Login from './pages/Login';
 import Toast from './components/Toast';
 import { useAuth } from './context/AuthContext';
+import { api } from './api';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [logo, setLogo] = useState('/logo.png');
   const location = useLocation();
   const { user, loading, logout } = useAuth();
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      try {
+        const settings = await api.getSettings();
+        const logoSetting = settings.find(s => s.key === 'company_logo');
+        if (logoSetting && logoSetting.value) setLogo(logoSetting.value);
+      } catch (err) {
+        console.error("Failed to fetch logo:", err);
+      }
+    };
+    if (user) fetchLogo();
+  }, [user]);
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
@@ -33,6 +50,7 @@ function App() {
     { icon: PlusCircle, label: 'Add Product', path: '/add-product' },
     { icon: SettingsIcon, label: 'Settings', path: '/settings' },
     { icon: Mail, label: 'Web Inquiries', path: '/inquiries' },
+    { icon: Briefcase, label: 'Applications', path: '/applications' },
   ];
 
   if (loading) {
@@ -61,8 +79,8 @@ function App() {
       {/* Sidebar */}
       <aside className={`bg-white border-r border-slate-200 transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-20'} hidden md:flex flex-col`}>
         <div className="p-6 flex items-center gap-3 border-b border-slate-50">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center font-bold text-white flex-shrink-0 shadow-lg shadow-primary/20">
-             <ShieldCheck size={18} />
+          <div className="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center p-1 shadow-sm">
+             <img src={logo} alt="SGU" className="w-full h-auto mix-blend-multiply" />
           </div>
           {isSidebarOpen && <span className="font-bold text-lg tracking-tight text-slate-800">SGU ADMIN</span>}
         </div>
@@ -130,6 +148,7 @@ function App() {
             <Route path="/product-details/:id" element={<ProductDetails />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/inquiries" element={<WebInquiries />} />
+            <Route path="/applications" element={<JobApplications />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext(null);
 
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://127.0.0.1:8000'
+  ? 'http://127.0.0.1:8022'
   : 'https://api.agamjain.online/sgu';
 
 export const AuthProvider = ({ children }) => {

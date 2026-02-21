@@ -108,7 +108,7 @@ export default function ProductDetails() {
         {/* LEFT: Visual Assets */}
         <div className="lg:col-span-5 space-y-6">
           <div className="bg-white border border-slate-200 rounded-[2.5rem] p-6 shadow-sm relative overflow-hidden">
-            <div className="aspect-square rounded-[2rem] overflow-hidden bg-slate-50 border border-slate-100 relative">
+            <div className="aspect-square rounded-[2rem] overflow-hidden bg-slate-50 border border-slate-100 relative group">
               <img 
                 src={activeImage || 'https://images.unsplash.com/photo-1506484334402-40f21503f283?q=80&w=800&auto=format&fit=crop'} 
                 alt={product.name} 
